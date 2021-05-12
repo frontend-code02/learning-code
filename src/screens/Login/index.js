@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Image, TouchableHighlight, Text, StyleSheet} from 'react-native';
+import SocialNetworkButton from '../../components/SocialNetworkButton';
 
 const Login = () => {
   return (
@@ -13,24 +14,12 @@ const Login = () => {
       <Text style={styles.title}>Login</Text>
       <Text style={styles.subtitle}>Login com redes sociais</Text>
       <View style={styles.sectionSocialNetworks}>
-        <TouchableHighlight
-          style={styles.socialNetworkBtn}
-          onPress={() => {}}
-          underlayColor="#6599EA">
-          <Image source={require('../../assets/icons/facebook-icon.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.socialNetworkBtn}
-          onPress={() => {}}
-          underlayColor="#6599EA">
-          <Image source={require('../../assets/icons/insta-icon.png')} />
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.socialNetworkBtn}
-          onPress={() => {}}
-          underlayColor="#6599EA">
-          <Image source={require('../../assets/icons/google-icon.png')} />
-        </TouchableHighlight>
+        <SocialNetworkButton img="facebook" onPress={() => alert('facebook')} />
+        <SocialNetworkButton
+          img="instagram"
+          onPress={() => alert('instagram')}
+        />
+        <SocialNetworkButton img="google" onPress={() => alert('google')} />
       </View>
     </View>
   );

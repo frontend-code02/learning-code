@@ -1,22 +1,38 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Image,
-  TouchableHighlight,
-  Text,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+
+import {View, Image, TouchableHighlight, Text, StyleSheet} from 'react-native';
+
+import DefaultButton from '../../components/DefaultButton';
 import DefaultTextInput from '../../components/DefaultTextInput';
 
 import SocialNetworkButton from '../../components/SocialNetworkButton';
+
+import api from '../../services/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigation = useNavigation();
+
   const handleChangeText = valueText => {
     setEmail(valueText);
+  };
+
+  const handleLogin = () => {
+    api
+      .get('/users')
+      .then(res => {
+        res.data.map(user => {
+          if (user.email === email && user.password === password) {
+            navigation.navigate('Home');
+          } else {
+            alert('Usuário ou senha inválidos!');
+          }
+        });
+      })
+      .catch(err => console.log('deu erro hein ', err));
   };
 
   return (
@@ -56,13 +72,12 @@ const Login = () => {
           />
         </View>
         <View style={styles.sectionBtns}>
-          <TouchableHighlight onPress={() => {}}>
+          <TouchableHighlight
+            onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.textInput}>Esqueceu a senha?</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => {}}>
-            <Text>Entrar</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => {}}>
+          <DefaultButton onPress={() => handleLogin()} text="Entrar" />
+          <TouchableHighlight onPress={() => navigation.navigate('Signup')}>
             <Text style={styles.textInput}>Cadastrar</Text>
           </TouchableHighlight>
         </View>
@@ -112,6 +127,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: '#78746D',
+  },
+  sectionBtns: {
+    width: '100%',
+    alignItems: 'center',
   },
 });
 
